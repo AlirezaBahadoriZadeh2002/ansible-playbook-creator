@@ -6,20 +6,19 @@
        group: root
        mode: 0755
   loop:
-    - ~/sampleTemplate/provision
-    - ~/sampleTemplate/provision/roles
-    - ~/sampleTemplate/provision/roles/myproject
-    - ~/sampleTemplate/provision/roles/myproject/vars
-    - ~/sampleTemplate/provision/roles/myproject/default
-    - ~/sampleTemplate/provision/roles/myproject/templates
-    - ~/sampleTemplate/provision/roles/myproject/handlers
-    - ~/sampleTemplate/provision/roles/myproject/files
-    - ~/sampleTemplate/provision/roles/myproject/meta
-    - ~/sampleTemplate/provision/roles/myproject/tasks
-    - ~/sampleTemplate/provision/roles/myproject/test
-    - ~/sampleTemplate/provision/inventory
+    - ~/ansible_playbook/provision
+    - ~/ansible_playbook/provision/roles
+    - ~/ansible_playbook/provision/roles/{{name}}
+    - ~/ansible_playbook/provision/roles/{{name}}/vars
+    - ~/ansible_playbook/provision/roles/{{name}}/default
+    - ~/ansible_playbook/provision/roles/{{name}}/templates
+    - ~/ansible_playbook/provision/roles/{{name}}/handlers
+    - ~/ansible_playbook/provision/roles/{{name}}/files
+    - ~/ansible_playbook/provision/roles/{{name}}/meta
+    - ~/ansible_playbook/provision/roles/{{name}}/tasks
+    - ~/ansible_playbook/provision/inventory
   tags: template
-  
+
 
 
 
@@ -31,24 +30,22 @@
        group: root
        mode: 0755
   loop:
-    - ~/sampleTemplate/provision/roles/myproject/default/main.yaml
-    - ~/sampleTemplate/provision/roles/myproject/handlers/main.yaml
-    - ~/sampleTemplate/provision/roles/myproject/meta/main.yaml
-    - ~/sampleTemplate/provision/roles/myproject/tasks/main.yaml
-    - ~/sampleTemplate/provision/roles/myproject/vars/main.yaml
-#    - ~/sampleTemplate/provision/myproject.yaml
-#    - ~/sampleTemplate/provision/inventory/hosts
+    - ~/ansible_playbook/provision/roles/{{name}}/default/main.yaml
+    - ~/ansible_playbook/provision/roles/{{name}}/handlers/main.yaml
+    - ~/ansible_playbook/provision/roles/{{name}}/meta/main.yaml
+    - ~/ansible_playbook/provision/roles/{{name}}/tasks/main.yaml
+    - ~/ansible_playbook/provision/roles/{{name}}/vars/main.yaml
   tags: template
-  
-  
-- name: Copy myproject
+
+
+- name: Copy project
   copy:
     src: myproject.yaml
-    dest: ~/sampleTemplate/provision/myproject.yaml
+    dest: ~/ansible_playbook/provision/{{name}}.yaml
   tags: template
-  
+
 - name: Copy hosts
   copy:
     src: hosts
-    dest: ~/sampleTemplate/provision/inventory/hosts
+    dest: ~/ansible_playbook/provision/inventory/hosts
   tags: template
