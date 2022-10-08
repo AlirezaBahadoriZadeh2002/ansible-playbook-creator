@@ -4,6 +4,8 @@
   register: name
   when: name is not defined
 
+
+
 - name: create directories for template playbook
   file:
        path: "{{ item }}"
@@ -12,18 +14,20 @@
        group: root
        mode: 0755
   loop:
-    - ~/ansible_playbook/provision
-    - ~/ansible_playbook/provision/roles
-    - ~/ansible_playbook/provision/roles/{{name.user_input}}
-    - ~/ansible_playbook/provision/roles/{{name.user_input}}/vars
-    - ~/ansible_playbook/provision/roles/{{name.user_input}}/default
-    - ~/ansible_playbook/provision/roles/{{name.user_input}}/templates
-    - ~/ansible_playbook/provision/roles/{{name.user_input}}/handlers
-    - ~/ansible_playbook/provision/roles/{{name.user_input}}/files
-    - ~/ansible_playbook/provision/roles/{{name.user_input}}/meta
-    - ~/ansible_playbook/provision/roles/{{name.user_input}}/tasks
-    - ~/ansible_playbook/provision/inventory
+    - ~/{{name.user_input}}_playbook/provision
+    - ~/{{name.user_input}}_playbook/provision/roles
+    - ~/{{name.user_input}}_playbook/provision/roles/{{name.user_input}}
+    - ~/{{name.user_input}}_playbook/provision/roles/{{name.user_input}}/vars
+    - ~/{{name.user_input}}_playbook/provision/roles/{{name.user_input}}/default
+    - ~/{{name.user_input}}_playbook/provision/roles/{{name.user_input}}/templates
+    - ~/{{name.user_input}}_playbook/provision/roles/{{name.user_input}}/handlers
+    - ~/{{name.user_input}}_playbook/provision/roles/{{name.user_input}}/files
+    - ~/{{name.user_input}}_playbook/provision/roles/{{name.user_input}}/meta
+    - ~/{{name.user_input}}_playbook/provision/roles/{{name.user_input}}/tasks
+    - ~/{{name.user_input}}_playbook/provision/inventory
   tags: template
+
+
 
 
 - name: create yaml files for template playbook
@@ -34,21 +38,22 @@
        group: root
        mode: 0755
   loop:
-    - ~/ansible_playbook/provision/roles/{{name.user_input}}/default/main.yaml
-    - ~/ansible_playbook/provision/roles/{{name.user_input}}/handlers/main.yaml
-    - ~/ansible_playbook/provision/roles/{{name.user_input}}/meta/main.yaml
-    - ~/ansible_playbook/provision/roles/{{name.user_input}}/tasks/main.yaml
-    - ~/ansible_playbook/provision/roles/{{name.user_input}}/vars/main.yaml
+    - ~/{{name.user_input}}_playbook/provision/roles/{{name.user_input}}/default/main.yaml
+    - ~/{{name.user_input}}_playbook/provision/roles/{{name.user_input}}/handlers/main.yaml
+    - ~/{{name.user_input}}_playbook/provision/roles/{{name.user_input}}/meta/main.yaml
+    - ~/{{name.user_input}}_playbook/provision/roles/{{name.user_input}}/tasks/main.yaml
+    - ~/{{name.user_input}}_playbook/provision/roles/{{name.user_input}}/vars/main.yaml
   tags: template
+
 
 - name: Copy project
   copy:
     src: myproject.yaml
-    dest: ~/ansible_playbook/provision/{{name.user_input}}.yaml
+    dest: ~/{{name.user_input}}_playbook/provision/{{name.user_input}}.yaml
   tags: template
 
 - name: Copy hosts
   copy:
     src: hosts
-    dest: ~/ansible_playbook/provision/inventory/hosts
+    dest: ~/{{name.user_input}}_playbook/provision/inventory/hosts
   tags: template
