@@ -1,3 +1,9 @@
+- name: check if a variable definded!
+  pause:
+        prompt: "Enter the name project"
+  register: name
+  when: name is not defined
+
 - name: create directories for template playbook
   file:
        path: "{{ item }}"
@@ -8,18 +14,16 @@
   loop:
     - ~/ansible_playbook/provision
     - ~/ansible_playbook/provision/roles
-    - ~/ansible_playbook/provision/roles/{{name}}
-    - ~/ansible_playbook/provision/roles/{{name}}/vars
-    - ~/ansible_playbook/provision/roles/{{name}}/default
-    - ~/ansible_playbook/provision/roles/{{name}}/templates
-    - ~/ansible_playbook/provision/roles/{{name}}/handlers
-    - ~/ansible_playbook/provision/roles/{{name}}/files
-    - ~/ansible_playbook/provision/roles/{{name}}/meta
-    - ~/ansible_playbook/provision/roles/{{name}}/tasks
+    - ~/ansible_playbook/provision/roles/{{name.user_input}}
+    - ~/ansible_playbook/provision/roles/{{name.user_input}}/vars
+    - ~/ansible_playbook/provision/roles/{{name.user_input}}/default
+    - ~/ansible_playbook/provision/roles/{{name.user_input}}/templates
+    - ~/ansible_playbook/provision/roles/{{name.user_input}}/handlers
+    - ~/ansible_playbook/provision/roles/{{name.user_input}}/files
+    - ~/ansible_playbook/provision/roles/{{name.user_input}}/meta
+    - ~/ansible_playbook/provision/roles/{{name.user_input}}/tasks
     - ~/ansible_playbook/provision/inventory
   tags: template
-
-
 
 
 - name: create yaml files for template playbook
@@ -30,18 +34,17 @@
        group: root
        mode: 0755
   loop:
-    - ~/ansible_playbook/provision/roles/{{name}}/default/main.yaml
-    - ~/ansible_playbook/provision/roles/{{name}}/handlers/main.yaml
-    - ~/ansible_playbook/provision/roles/{{name}}/meta/main.yaml
-    - ~/ansible_playbook/provision/roles/{{name}}/tasks/main.yaml
-    - ~/ansible_playbook/provision/roles/{{name}}/vars/main.yaml
+    - ~/ansible_playbook/provision/roles/{{name.user_input}}/default/main.yaml
+    - ~/ansible_playbook/provision/roles/{{name.user_input}}/handlers/main.yaml
+    - ~/ansible_playbook/provision/roles/{{name.user_input}}/meta/main.yaml
+    - ~/ansible_playbook/provision/roles/{{name.user_input}}/tasks/main.yaml
+    - ~/ansible_playbook/provision/roles/{{name.user_input}}/vars/main.yaml
   tags: template
-
 
 - name: Copy project
   copy:
     src: myproject.yaml
-    dest: ~/ansible_playbook/provision/{{name}}.yaml
+    dest: ~/ansible_playbook/provision/{{name.user_input}}.yaml
   tags: template
 
 - name: Copy hosts
