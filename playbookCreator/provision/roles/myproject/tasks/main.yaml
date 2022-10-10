@@ -52,6 +52,16 @@
     dest: ~/{{name.user_input}}_playbook/provision/{{name.user_input}}.yaml
   tags: template
 
+
+- name: change project file
+  lineinfile:
+        path: ~/{{name.user_input}}_playbook/provision/{{name.user_input}}.yaml
+        insertafter: "## test"
+        line: "        - {{name.user_input}}      #(new)"
+        state: present
+  tags: template
+
+
 - name: Copy hosts
   copy:
     src: hosts
